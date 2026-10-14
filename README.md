@@ -117,9 +117,10 @@ Make sure you have the following installed:
 
 ## ▶️ Run the Backend
 
-From the project root:
+From the backend directory (`be`):
 
 ```bash
+cd be
 ./mvnw spring-boot:run
 ```
 
