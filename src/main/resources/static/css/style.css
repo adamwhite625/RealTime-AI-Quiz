@@ -1,0 +1,251 @@
+/* src/main/resources/static/css/style.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+h1,
+h2,
+h3 {
+    color: #46178f;
+    margin-bottom: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #46178f;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #46178f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #35106e;
+}
+
+button.secondary {
+    background-color: #6c757d;
+}
+
+button.secondary:hover {
+    background-color: #5a6268;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Player Grid / Badges */
+#playerGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.player-badge {
+    background-color: #e3f2fd;
+    color: #46178f;
+    border: 1px solid #46178f;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.error-msg {
+    color: #d32f2f;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.info-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+}
+
+.pin-display {
+    font-size: 3rem;
+    letter-spacing: 5px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* --- QUESTION SCREEN --- */
+.question-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    min-height: 80px;
+}
+
+.timer-bar {
+    height: 10px;
+    background-color: #ddd;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.timer-progress {
+    height: 100%;
+    background-color: #46178f;
+    width: 100%;
+    transition: width 1s linear;
+}
+
+/* --- OPTION GRID --- */
+.option-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.option-btn {
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.3s;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option-btn:hover {
+    transform: scale(1.02);
+}
+
+.option-btn:active {
+    transform: scale(0.98);
+}
+
+.option-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Kahoot Colors */
+.opt-0 {
+    background-color: #e21b3c;
+}
+
+/* Red */
+.opt-1 {
+    background-color: #1368ce;
+}
+
+/* Blue */
+.opt-2 {
+    background-color: #d89e00;
+}
+
+/* Yellow */
+.opt-3 {
+    background-color: #26890c;
+}
+
+/* Green */
+
+/* Host Specifics */
+.stats-box {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 1.1rem;
+}
+
+/* Highlighting Logic (For later) */
+.option-btn.correct {
+    border: 5px solid #26890c;
+    box-shadow: 0 0 15px #26890c;
+}
+
+.option-btn.dimmed {
+    opacity: 0.3;
+}
+
+/* Feedback Screen */
+.feedback-box {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.feedback-correct {
+    background-color: #26890c;
+}
+
+.feedback-wrong {
+    background-color: #e21b3c;
+}

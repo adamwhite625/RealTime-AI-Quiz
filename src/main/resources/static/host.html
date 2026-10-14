@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Host Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="card">
+
+        <div id="configScreen">
+            <h2>👑 Host a Game</h2>
+
+            <label class="info-label">Your JWT Token (from Login):</label>
+            <input type="text" id="inputToken" placeholder="Paste your Bearer Token here">
+
+            <label class="info-label">Quiz ID (UUID):</label>
+            <input type="text" id="inputQuizId" placeholder="Paste Quiz UUID here">
+
+            <button id="btnCreate">Create Session</button>
+            <p id="hostErrorMsg" class="error-msg"></p>
+        </div>
+
+        <div id="hostLobbyScreen" class="hidden">
+            <h3>Join with PIN:</h3>
+            <div id="displayPin" class="pin-display">------</div>
+
+            <p>Players in Lobby: <strong id="playerCount">0</strong></p>
+
+            <div id="playerGrid"></div>
+
+            <button id="btnStart" style="background-color: #28a745;">Start Game 🚀</button>
+        </div>
+
+        <div id="hostGameScreen" class="hidden">
+            <h1>Game in Progress...</h1>
+            <p>Look at the big screen!</p>
+            <button id="btnEnd" class="secondary">End Game</button>
+        </div>
+        <div id="hostQuestionScreen" class="hidden">
+            <div class="header-row">
+                <span>Question <span id="qCurrent">1</span>/<span id="qTotal">10</span></span>
+                <button class="secondary" id="btnEndQuestion" style="width:auto; padding:5px 10px;">Stop Timer</button>
+            </div>
+
+            <h2 id="hostQuestionText" class="question-text">Loading...</h2>
+
+            <div class="timer-bar">
+                <div id="hostTimer" class="timer-progress"></div>
+            </div>
+
+            <div id="hostOptionGrid" class="option-grid"></div>
+
+            <div id="hostStatsBox" class="stats-box">
+                Answers: <strong id="hostAnswerCount" style="font-size:1.5em;">0</strong> / <span
+                    id="hostTotalPlayers">0</span>
+            </div>
+
+            <div id="hostLeaderboard" class="hidden"
+                style="margin: 20px 0; padding: 15px; background: #fff; border-radius: 8px;">
+            </div>
+
+            <div id="hostControls" class="hidden">
+                <button id="btnNextQuestion" style="background-color: #28a745;">Next Question ➡</button>
+            </div>
+        </div>
+        <div id="hostGameOverScreen" class="hidden">
+            <h1 style="font-size: 3rem; margin-bottom: 10px;">🏆 Game Over!</h1>
+            <p>Final Standings:</p>
+
+            <div id="finalLeaderboard"
+                style="margin: 20px auto; max-width: 500px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                Loading results...
+            </div>
+
+            <button onclick="location.reload()" style="margin-top: 20px;">Back to Home</button>
+        </div>
+
+    </div>
+
+    <script src="js/stomp-client.js"></script>
+    <script src="js/game-logic.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

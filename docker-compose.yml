@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  postgresql:
+    image: postgres:16
+    container_name: postgresql-db
+    environment:
+      POSTGRES_DB: quizmaster      # This creates your APP database
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Mount the script to the special init directory
+      - ./init-scripts:/docker-entrypoint-initdb.d 
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d quizmaster"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.0
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      # UPDATE: Point Keycloak to the NEW database
+      KC_DB_URL: "jdbc:postgresql://postgresql:5432/keycloak_db" 
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: admin
+    ports:
+      - "8180:8080"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+
+volumes:
+  pgdata:
+  keycloak_data:
