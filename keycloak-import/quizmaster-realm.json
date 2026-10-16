@@ -1,0 +1,82 @@
+{
+  "id": "quizmaster-realm",
+  "realm": "quizmaster-realm",
+  "displayName": "QuizMaster Realm",
+  "enabled": true,
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "sslRequired": "none",
+  "roles": {
+    "realm": [
+      {
+        "name": "default-roles-quizmaster-realm",
+        "composite": true,
+        "clientRole": false
+      },
+      {
+        "name": "user",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "admin",
+        "composite": false,
+        "clientRole": false
+      }
+    ],
+    "client": {
+      "quizmaster-client": [
+        {
+          "name": "manage-user",
+          "clientRole": true
+        }
+      ]
+    }
+  },
+  "defaultRole": {
+    "name": "default-roles-quizmaster-realm",
+    "composite": true,
+    "clientRole": false
+  },
+  "clients": [
+    {
+      "clientId": "quizmaster-client",
+      "name": "QuizMaster Client",
+      "enabled": true,
+      "alwaysDisplayInConsole": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "qXJB6bYWTjCrrwYdOY2JLUn3Va7WWTft",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": true
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-quizmaster-client",
+      "enabled": true,
+      "serviceAccountClientId": "quizmaster-client",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users",
+          "query-groups",
+          "realm-admin"
+        ]
+      }
+    }
+  ]
+}

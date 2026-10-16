@@ -5,18 +5,17 @@ services:
     image: postgres:16
     container_name: postgresql-db
     environment:
-      POSTGRES_DB: quizmaster      # This creates your APP database
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: ${POSTGRES_DB:-quizmaster}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
       TZ: Asia/Ho_Chi_Minh
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      # Mount the script to the special init directory
       - ./be/init-scripts:/docker-entrypoint-initdb.d 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d quizmaster"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-quizmaster}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -24,22 +23,40 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:23.0.0
     container_name: keycloak
-    command: start-dev
+    command: start-dev --import-realm
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
       KC_DB: postgres
-      # UPDATE: Point Keycloak to the NEW database
       KC_DB_URL: "jdbc:postgresql://postgresql:5432/keycloak_db" 
-      KC_DB_USERNAME: admin
-      KC_DB_PASSWORD: admin
+      KC_DB_USERNAME: ${POSTGRES_USER:-admin}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-admin}
     ports:
-      - "8180:8080"
+      - "${KEYCLOAK_PORT:-8180}:8080"
     depends_on:
       postgresql:
         condition: service_healthy
     volumes:
       - keycloak_data:/opt/keycloak/data
+      - ./keycloak-import:/opt/keycloak/data/import
+
+  voice-engine:
+    build:
+      context: ./voice
+      dockerfile: Dockerfile
+    container_name: voice-engine
+    ports:
+      - "${VOICE_PORT:-8001}:8001"
+    environment:
+      - PORT=8001
+      - SPRING_BACKEND_URL=http://host.docker.internal:8080
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.5-flash-lite}
+    volumes:
+      - ./voice:/app
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   pgdata:
